@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const pages = [
   { title: "Books", path: "/" },
   { title: "Lists", path: "/lists" },
-  // { title: "Reviews", path: "/reviews" },
+  { title: "Reviews", path: "/reviews" },
 ];
 
 export const Header = () => {

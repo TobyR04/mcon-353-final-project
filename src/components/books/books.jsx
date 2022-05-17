@@ -1,20 +1,23 @@
 import "./books.css";
 import React, { useEffect, useState } from "react";
-import { useInterval } from "./useInterval";
+import { Book } from "./book";
+
 import { createHashHistory } from "history";
 import SearchIcon from "@mui/icons-material/Search";
 import {
-  Paper,
-  Container,
-  Grid,
-  Box,
+  Button,
   TextField,
   FormControl,
   IconButton,
   Select,
   InputLabel,
   MenuItem,
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
 } from "@mui/material";
+import BookList from "./bookList";
 
 export function Books({ onAdd, lists }) {
   // const [books, setBooks] = useState([{}]);
@@ -22,21 +25,6 @@ export function Books({ onAdd, lists }) {
   const [books, setBooks] = useState([]);
   const [currentList, setCurrentList] = useState();
 
-  // // constructor(props){
-  // //   super(props);
-  // //   this.state = {
-  // //     books:[],
-  // //     searchField: ''
-  // //   }
-  // // }
-  // // const newBook = {
-  // //   searchField: "",
-  // //   books: [],
-  // // };
-
-  // // handleSearch = (e) => {
-  // //   this.setState({ searchField: e.target.value });
-  // // };
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
@@ -60,50 +48,11 @@ export function Books({ onAdd, lists }) {
     setBooks(parsedBody);
     console.log(parsedBody);
   };
-  // useInterval(() => {
-  //   fetch(`ttps://www.googleapis.com/books/v1/volumes?`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setBooks(data.Items);
-  //     });
-  // }, 1000);
-  // searchBook = (e) => {
-  //   e.preventDefault();
-  //   //useInterval(() => {
-  //   request
-  //     .get(`https://www.googleapis.com/books/v1/volumes?`)
-  //     .query({ q: this.search })
-  //     .then((data) => {
-  //       createHashHistory.setState({ books: [...data.body.items] }); //need the books array
 
-  //       //setBooks(data.Items);
-  //     });
-  //   //}, 1000);
-  //};
   return (
     <>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">
-          Pick List
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          label="list"
-          onChange={(e) => {
-            setCurrentList(e.target.value);
-          }}
-        >
-          {lists.map((list) => (
-            <MenuItem key={list.id} value={list.id}>
-              {list.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
       <form onSubmit={handleSearchSubmit}>
-        <div>Books</div>
+        <div id="title">Books</div>
         <TextField
           id="filled-basic"
           onChange={handleSearch}
@@ -118,44 +67,10 @@ export function Books({ onAdd, lists }) {
       </form>
 
       <div>
-        {books.map((book) => {
-          return (
-            <div key={book.id}>
-              <h1>
-                <a href={book.link}>{book.title}</a>
-              </h1>
-
-              <img
-                src={book.img}
-                onClick={() => {
-                  onAdd(currentList, book);
-                }}
-              />
-              <p>{book.authors} </p>
-            </div>
-          );
-        })}
+        <BookList books={books} lists={lists} onAdd={onAdd} />
       </div>
     </>
   );
-  {
-    /* //   <div className="form">
-  //     <header> Books</header>
-  //     <div className="search">
-  //       <form onSubmit={searchBook} action="">
-  //         <input onChange={handleSearch} type="text" />
-  //         <button type="submit">Search</button>
-  //       </form>
-  //     </div>
-  //     books.map((book,i) => { */
-  }
-  //       image = {book.volumeInfo.imageLinks.thumbnail}
-  //       title={book.volumeInfo.title}
-  //     author={book.volumeInfo.authors }
-  //     published={book.volumeInfo.publishedDate}
-  //     })
-  //   </div>
-  //);
 }
 
 export default Books;

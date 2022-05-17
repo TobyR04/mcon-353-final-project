@@ -6,10 +6,9 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "../header/header";
 
-//import { TodoProvider } from "../state/context";
-
 function App() {
   const [lists, setLists] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const addList = (name) => {
     const newList = {
       name,
@@ -29,6 +28,14 @@ function App() {
     setLists(newLists);
   };
 
+  const addReview = (book, review) => {
+    const newBook = {
+      ...book,
+      review,
+    };
+    setReviews([...reviews, newBook]);
+  };
+
   return (
     <div>
       <BrowserRouter>
@@ -40,9 +47,11 @@ function App() {
           ></Route>
           <Route
             path="/lists"
-            element={<Lists onAdd={addList} lists={lists} />}
+            element={
+              <Lists onAdd={addList} lists={lists} onAddReview={addReview} />
+            }
           />
-          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/reviews" element={<Reviews reviews={reviews} />} />
         </Routes>
       </BrowserRouter>
     </div>
