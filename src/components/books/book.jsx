@@ -7,13 +7,16 @@ import {
   MenuItem,
   Card,
   Grid,
+  IconButton,
 } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export function Book({
   book,
   lists = [],
   onAdd = () => {},
-  onAddReview = () => {},
+  onAddReview,
+  onRemoveBook,
 }) {
   const [currentList, setCurrentList] = useState(lists[0]?.id);
 
@@ -28,10 +31,25 @@ export function Book({
         }}
       >
         <div key={book.id}>
-          <h1>
-            <a href={book.link}>{book.title}</a>
+          <h1
+            style={{
+              fontSize: "20px",
+              height: "6rem",
+            }}
+          >
+            {onRemoveBook && (
+              <IconButton>
+                <ClearIcon onClick={onRemoveBook}></ClearIcon>
+              </IconButton>
+            )}
+            <a target="_blank" href={book.link}>
+              {book.title || "title not found"}
+            </a>
           </h1>
-          <img src={book.img} />{" "}
+          <img
+            style={{ height: "200px", width: "150px" }}
+            src={book.img || "https://picsum.photos/150/200"}
+          />
           {!!lists.length && (
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-standard-label">
@@ -62,15 +80,28 @@ export function Book({
               </Button>
             </FormControl>
           )}
-          <Button
-            onClick={() => {
-              onAddReview(book, prompt("Please write your review."));
-            }}
-          >
-            Add Review
-          </Button>
-          <p>{book.authors} </p>
-          <p>{book.review}</p>
+          {onAddReview && (
+            <Button
+              onClick={() => {
+                onAddReview(book, prompt("Please write your review."));
+              }}
+            >
+              Add Review
+            </Button>
+          )}
+          <p style={{ fontWeight: "bold" }}>
+            {book.authors || "authors not found"}{" "}
+          </p>
+          {book.review && (
+            <p
+              style={{
+                border: "2px solid rgba(0, 0, 0, 0.05)",
+                textAlign: "center",
+              }}
+            >
+              {book.review}
+            </p>
+          )}
         </div>
       </Card>
     </Grid>

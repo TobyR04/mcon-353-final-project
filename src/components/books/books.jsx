@@ -1,29 +1,13 @@
 import "./books.css";
-import React, { useEffect, useState } from "react";
-import { Book } from "./book";
+import React, { useState } from "react";
 
-import { createHashHistory } from "history";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  Button,
-  TextField,
-  FormControl,
-  IconButton,
-  Select,
-  InputLabel,
-  MenuItem,
-  Card,
-  CardMedia,
-  CardContent,
-  Grid,
-} from "@mui/material";
+import { TextField, IconButton } from "@mui/material";
 import BookList from "./bookList";
 
 export function Books({ onAdd, lists }) {
-  // const [books, setBooks] = useState([{}]);
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState([]);
-  const [currentList, setCurrentList] = useState();
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -31,7 +15,7 @@ export function Books({ onAdd, lists }) {
 
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
-    console.log("hi");
+
     const response = await fetch(
       "https://www.googleapis.com/books/v1/volumes?q=" + search
     );
@@ -46,26 +30,27 @@ export function Books({ onAdd, lists }) {
       };
     });
     setBooks(parsedBody);
+    setSearch("");
     console.log(parsedBody);
   };
 
   return (
     <>
-      <form onSubmit={handleSearchSubmit}>
-        <div id="title">Books</div>
-        <TextField
-          id="filled-basic"
-          onChange={handleSearch}
-          value={search}
-          placeholder="Search Book"
-        />
+      <div className="books">
+        <form onSubmit={handleSearchSubmit}>
+          <TextField
+            id="filled-basic"
+            onChange={handleSearch}
+            value={search}
+            placeholder="Search Book"
+          />
 
-        <IconButton type="submit">
-          {" "}
-          <SearchIcon id="submit" type="submit"></SearchIcon>
-        </IconButton>
-      </form>
-
+          <IconButton type="submit">
+            {" "}
+            <SearchIcon id="submit" type="submit"></SearchIcon>
+          </IconButton>
+        </form>
+      </div>
       <div>
         <BookList books={books} lists={lists} onAdd={onAdd} />
       </div>

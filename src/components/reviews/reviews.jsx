@@ -1,10 +1,16 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import "./reviews.css";
-import { TextField, IconButton } from "@mui/material";
+
 import BookList from "../books/bookList";
 
 export function Reviews({ reviews }) {
-  return <BookList books={reviews} />;
+  return reviews.length ? (
+    <BookList books={reviews} />
+  ) : (
+    <div className="reviews">
+      If you would like to add a review, please go to the lists page
+    </div>
+  );
 }
 
 export default Reviews;

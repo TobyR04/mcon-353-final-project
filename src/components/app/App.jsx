@@ -28,6 +28,18 @@ function App() {
     setLists(newLists);
   };
 
+  const removeBookFromList = (listId, bookId) => {
+    const newLists = [...lists];
+    const targetList = newLists.find((list) => {
+      return list.id === listId;
+    });
+
+    targetList.books = targetList.books.filter((book) => {
+      return book.id !== bookId;
+    });
+    setLists(newLists);
+  };
+
   const addReview = (book, review) => {
     const newBook = {
       ...book,
@@ -48,7 +60,12 @@ function App() {
           <Route
             path="/lists"
             element={
-              <Lists onAdd={addList} lists={lists} onAddReview={addReview} />
+              <Lists
+                onAdd={addList}
+                lists={lists}
+                onAddReview={addReview}
+                onRemoveBook={removeBookFromList}
+              />
             }
           />
           <Route path="/reviews" element={<Reviews reviews={reviews} />} />

@@ -1,7 +1,7 @@
 import { Book } from "./book";
 import { Grid } from "@mui/material";
 
-export function BookList({ books, lists, onAdd, onAddReview }) {
+export function BookList({ books, lists, onAdd, onAddReview, onRemoveBook }) {
   return (
     <Grid
       container
@@ -17,6 +17,9 @@ export function BookList({ books, lists, onAdd, onAddReview }) {
             lists={lists}
             onAdd={onAdd}
             onAddReview={onAddReview}
+            onRemoveBook={
+              onRemoveBook ? () => onRemoveBook(book.id) : undefined
+            }
           />
         );
       })}
