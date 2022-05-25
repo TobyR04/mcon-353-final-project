@@ -24,7 +24,6 @@ function App() {
     });
 
     targetLists.books.push(book);
-    console.log(newLists);
     setLists(newLists);
   };
 

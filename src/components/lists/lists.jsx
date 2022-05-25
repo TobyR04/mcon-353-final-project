@@ -19,6 +19,7 @@ export function Lists({ onAdd, lists, onAddReview, onRemoveBook }) {
   function addList(event) {
     event.preventDefault();
     onAdd(listName);
+    setListName("");
   }
   const handleListName = (event) => {
     setListName(event.target.value);

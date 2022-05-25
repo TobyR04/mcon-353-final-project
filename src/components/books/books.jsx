@@ -31,7 +31,6 @@ export function Books({ onAdd, lists }) {
     });
     setBooks(parsedBody);
     setSearch("");
-    console.log(parsedBody);
   };
 
   return (
